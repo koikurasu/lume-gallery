@@ -5,11 +5,11 @@ title: Home
 
 {{ include "partials/gallery.vto" }}
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@5/dist/photoswipe.css">
-<link rel="stylesheet" href="https://unpkg.com/photoswipe-dynamic-caption-plugin/photoswipe-dynamic-caption-plugin.css">
+<link rel="stylesheet" href="/assets/css/vendor/photoswipe.css">
+<link rel="stylesheet" href="/assets/css/vendor/photoswipe-dynamic-caption-plugin.css">
 
 {{ if gallery_style === "masonry-js" }}
-<script src="https://cdn.jsdelivr.net/npm/macy@2"></script>
+<script src="/assets/js/vendor/macy.js"></script>
 <script src="/assets/js/gallery-masonry.js"></script>
 {{ /if }}
 <script type="module" src="/assets/js/gallery-lightbox.js"></script>

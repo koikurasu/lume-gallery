@@ -10,6 +10,13 @@ const site = lume({
   src: "./src",
 });
 
+site.remoteFile("/assets/css/vendor/photoswipe.css", "https://cdn.jsdelivr.net/npm/photoswipe@5/dist/photoswipe.css");
+site.remoteFile("/assets/css/vendor/photoswipe-dynamic-caption-plugin.css", "https://unpkg.com/photoswipe-dynamic-caption-plugin/photoswipe-dynamic-caption-plugin.css");
+site.remoteFile("/assets/js/vendor/macy.js", "https://cdn.jsdelivr.net/npm/macy@2");
+site.remoteFile("/assets/js/vendor/photoswipe-lightbox.esm.js", "https://cdn.jsdelivr.net/npm/photoswipe@5/dist/photoswipe-lightbox.esm.js");
+site.remoteFile("/assets/js/vendor/photoswipe-dynamic-caption-plugin.esm.js", "https://unpkg.com/photoswipe-dynamic-caption-plugin/photoswipe-dynamic-caption-plugin.esm.js");
+site.remoteFile("/assets/js/vendor/photoswipe.esm.js", "https://cdn.jsdelivr.net/npm/photoswipe@5/dist/photoswipe.esm.js");
+
 // in the _data/images spreadsheet, these column names are already reserved
 // for use when building the image gallery. all other columns are to be
 // treated as metadata for building the filtering system.
@@ -28,10 +35,10 @@ site.filter("extractMeta", (row: Record<string, unknown>) => {
   return meta;
 });
 
-// create a simple filter that removes all spaces and the final .{image extension}
+// create a simple filter that removes the final .{image extension}
 site.filter(
   "removeExt",
-  (filename: string) => filename.replaceAll(/\s/g, "").replace(/\.[^/.]+$/, ""),
+  (filename: string) => filename.replace(/\.[^/.]+$/, ""),
 );
 
 site.use(plugins());
