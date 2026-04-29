@@ -13,14 +13,17 @@
         data-{{ key }}="{{ values.join(" ") }}"
       {{ /for }}
     >
-      <a href="/assets/images/gallery/{{ name }}-2000.avif" target="_blank">
+      <a
+        href="/assets/images/gallery/{{ if lightbox_dimension }}{{ name }}-lightbox.avif{{ else }}{{ image.filename }}{{ /if }}"
+        target="_blank"
+      >
         <picture>
           <source
-            srcset="/assets/images/gallery/{{ name }}-300h.avif"
+            srcset="/assets/images/gallery/{{ name }}-thumbnail.avif"
             type="image/avif"
           >
           <img
-            src="/assets/images/gallery/{{ name }}-300h.jpg"
+            src="/assets/images/gallery/{{ name }}-thumbnail.jpg"
             alt="{{ image.alt }}"
             image-size
           >

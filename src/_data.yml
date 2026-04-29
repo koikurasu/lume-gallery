@@ -1,11 +1,5 @@
 lang: en
 
-# possible values: fixed-height, grid, masonry-css, masonry-js
-gallery_style: fixed-height
-
-# possible values: cover, contain
-image_fit: contain
-
 metas:
   site: Lume site
   twitter: ""
