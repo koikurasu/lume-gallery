@@ -1,0 +1,31 @@
+<div
+  class="gallery pswp-gallery"
+  id="gallery"
+  data-gallery-style="{{ gallery_style }}"
+  data-image-fit="{{ image_fit }}"
+>
+  {{ for image of images }}
+    {{ set meta = image |> extractMeta }}
+    {{ set name = image.filename |> removeExt }}
+    <div
+      class="gallery-item"
+      {{ for [key, values] of Object.entries(meta) }}
+        data-{{ key }}="{{ values.join(" ") }}"
+      {{ /for }}
+    >
+      <a href="/assets/images/gallery/{{ name }}-2000.avif" target="_blank">
+        <picture>
+          <source
+            srcset="/assets/images/gallery/{{ name }}-300h.avif"
+            type="image/avif"
+          >
+          <img
+            src="/assets/images/gallery/{{ name }}-300h.jpg"
+            alt="{{ image.alt }}"
+            image-size
+          >
+        </picture>
+      </a>
+    </div>
+  {{ /for }}
+</div>

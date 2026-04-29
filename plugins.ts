@@ -4,6 +4,11 @@ import metas from "lume/plugins/metas.ts";
 import { Options as SitemapOptions, sitemap } from "lume/plugins/sitemap.ts";
 import { favicon, Options as FaviconOptions } from "lume/plugins/favicon.ts";
 import { merge } from "lume/core/utils/object.ts";
+import sheets from "lume/plugins/sheets.ts";
+import picture from "lume/plugins/picture.ts";
+import transformImages from "lume/plugins/transform_images.ts";
+import imageSize from "lume/plugins/image_size.ts";
+import sass from "lume/plugins/sass.ts";
 
 import "lume/types.ts";
 
@@ -24,12 +29,20 @@ export default function (userOptions?: Options) {
 
   return (site: Lume.Site) => {
     site
+      .use(sass())
       .use(lightningcss())
       .use(basePath())
+      .use(picture())
+      .use(transformImages())
+      .use(imageSize())
       .use(metas())
       .use(sitemap(options.sitemap))
       .use(favicon(options.favicon))
-      .add("uploads")
-      .add("style.css");
+      .use(sheets({
+        sheets: "first",
+        extensions: [".ods", ".xls"],
+      }))
+      .add("style.scss")
+      .add("/assets");
   };
 }

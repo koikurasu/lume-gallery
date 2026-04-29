@@ -1,0 +1,27 @@
+transformImages:
+  - resize: 300
+    suffix: -300w
+    format:
+      - format: avif
+        quality: 80
+        chromaSubsampling: "4:4:4"
+      - format: jpg
+        quality: 88
+        mozjpeg: true
+        chromaSubsampling: "4:4:4"
+  - resize: [null, 300]
+    suffix: -300h
+    format:
+      - format: avif
+        quality: 80
+        chromaSubsampling: "4:4:4"
+      - format: jpg
+        quality: 88
+        mozjpeg: true
+        chromaSubsampling: "4:4:4"
+  - resize: [2000, 2000, { fit: inside, withoutEnlargement: true }]
+    suffix: -2000
+    format:
+      - format: avif
+        quality: 85
+        chromaSubsampling: "4:4:4"

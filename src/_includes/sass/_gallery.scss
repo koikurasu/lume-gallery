@@ -1,0 +1,56 @@
+@use "variables" as *;
+
+.gallery[data-gallery-style="fixed-height"] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $gallery-gap;
+  padding: $gallery-padding;
+
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+
+  .gallery-item {
+    height: $gallery-row-height;
+    overflow: hidden;
+  }
+
+  .gallery-item a {
+    display: block;
+    height: 100%;
+  }
+
+  .gallery-item picture {
+    display: block;
+    height: 100%;
+  }
+
+  .gallery-item img {
+    display: block;
+    height: 100%;
+    transition: transform $gallery-hover-transition-duration
+      $gallery-hover-transition-easing;
+  }
+
+  &[data-image-fit="cover"] {
+
+    .gallery-item {
+      flex: 1 0 auto;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+  }
+
+  &[data-image-fit="contain"] {
+    justify-content: space-evenly;
+  }
+}
+
+.gallery-item a:hover img,
+.gallery-item a:focus-visible img {
+  transform: scale($gallery-hover-scale);
+}

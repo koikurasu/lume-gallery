@@ -1,0 +1,23 @@
+// -----------------------------------------------------------------------------
+// Layout
+// -----------------------------------------------------------------------------
+
+/// Uniform height of every image row.
+$gallery-row-height: 300px !default;
+
+/// Gap between images (applies both horizontally and vertically).
+$gallery-gap: 60px !default;
+
+/// Padding around the entire gallery container.
+$gallery-padding: 50px !default;
+
+// -----------------------------------------------------------------------------
+// Interaction
+// -----------------------------------------------------------------------------
+
+/// Scale factor applied to an image on hover (set to 1 to disable).
+$gallery-hover-scale: 1.04 !default;
+
+/// Duration + easing of the hover scale transition.
+$gallery-hover-transition-duration: 200ms !default;
+$gallery-hover-transition-easing: ease !default;
