@@ -16,3 +16,6 @@ export const thumbnail_dimension = 300;
 // max width/height of lightbox images. will be resized to fit inside this dimension (with aspect ratio preserved)
 // set to null to always serve the original image files. note that this will greatly increase build times, especially the first build.
 export const lightbox_dimension = 2000;
+
+// remove original images from the published site. only takes effect if lightbox_dimensions != null
+export const remove_originals = true;

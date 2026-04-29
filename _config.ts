@@ -5,6 +5,7 @@ import {
   imageDimensionsFromStream,
 } from "lume/deps/image_dimmensions.ts";
 import { posix } from "lume/deps/path.ts";
+import { lightbox_dimension, remove_originals } from "./src/_data.ts";
 
 const site = lume({
   src: "./src",
@@ -84,5 +85,25 @@ site.process([".html"], async function processPswpSize(pages) {
     }
   }
 });
+
+// remove original images from the published site
+if (lightbox_dimension && remove_originals === true) {
+  site.process([".jpg", ".jpeg", ".png", ".webp", ".avif"], function removeGalleryOriginals(_pages, allPages) {
+    const galleryPrefix = "/assets/images/gallery/";
+    const suffixes = ["-thumbnail", "-lightbox"];
+
+    for (let i = allPages.length - 1; i >= 0; i--) {
+      const url = allPages[i].data.url as string;
+      if (!url.startsWith(galleryPrefix)) continue;
+
+      const base = url.replace(/\.[^.]+$/, "");
+      const isGenerated = suffixes.some((s) => base.endsWith(s));
+
+      if (!isGenerated) {
+        allPages.splice(i, 1);
+      }
+    }
+  });
+}
 
 export default site;
