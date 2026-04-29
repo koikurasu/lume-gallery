@@ -4,7 +4,7 @@ export const gallery_style:
   | "fixed-height"
   | "grid"
   | "masonry-css"
-  | "masonry-js" = "masonry-css";
+  | "masonry-js" = "masonry-js";
 
 // controls how images are resized to fit the allocated space
 // possible values: cover, contain

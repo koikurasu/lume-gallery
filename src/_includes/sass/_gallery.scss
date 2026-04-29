@@ -3,6 +3,8 @@
 .gallery {
   width: $gallery-width;
   margin-inline: calc(50% - $gallery-width / 2);
+  --gallery-gap: #{$gallery-gap};
+
 
   &[data-gallery-style="fixed-height"] {
     display: flex;
@@ -100,7 +102,8 @@
     }
   }
 
-  &[data-gallery-style="masonry-css"] {
+  &[data-gallery-style="masonry-css"],
+  &[data-gallery-style="masonry-js"] {
     column-width: var(--gallery-thumbnail-dimension);
     column-gap: $gallery-gap;
     padding: $gallery-padding;
@@ -127,6 +130,14 @@
       transition: transform $gallery-hover-transition-duration
         $gallery-hover-transition-easing;
     }
+  }
+
+  &[data-gallery-style="masonry-js"] {
+    /* Macy.js absolutely positions items relative to the padding box. 
+       Using a transparent border ensures items don't overlap the "padding" 
+       since borders restrict the absolute positioning area. */
+    padding: 0;
+    border: $gallery-padding solid transparent;
   }
 }
 
