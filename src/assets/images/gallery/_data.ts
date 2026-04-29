@@ -37,7 +37,8 @@ export const transformImages = [
         resize: lightboxResize,
         suffix: "-lightbox",
         format: [
-          { format: "avif", quality: 85, chromaSubsampling: "4:4:4" },
+          { format: "avif", quality: 80, chromaSubsampling: "4:4:4" },
+          { format: "jpg", quality: 88, mozjpeg: true, chromaSubsampling: "4:4:4" },
         ],
       },
     ]

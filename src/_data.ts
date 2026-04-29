@@ -10,7 +10,7 @@ export const gallery_style:
 // possible values: cover, contain
 export const image_fit: "cover" | "contain" = "contain";
 
-// max thumbnail height (if fixed-height) or width (if grid or masonry) of images.
+// max width/height of thumbnails.
 export const thumbnail_dimension = 300;
 
 // max width/height of lightbox images. will be resized to fit inside this dimension (with aspect ratio preserved)

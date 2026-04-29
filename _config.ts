@@ -1,5 +1,10 @@
 import lume from "lume/mod.ts";
 import plugins from "./plugins.ts";
+import {
+  imageDimensionsFromData,
+  imageDimensionsFromStream,
+} from "lume/deps/image_dimmensions.ts";
+import { posix } from "lume/deps/path.ts";
 
 const site = lume({
   src: "./src",
@@ -30,5 +35,47 @@ site.filter(
 );
 
 site.use(plugins());
+
+// add image dimensions to image links for photoswipe
+site.process([".html"], async function processPswpSize(pages) {
+  const sizes = new Map<string, { width: number; height: number } | undefined>();
+
+  async function getImageSize(path: string) {
+    if (sizes.has(path)) return sizes.get(path);
+
+    const page = site.pages.find((p) => p.data.url === path);
+    if (page) {
+      const dims = imageDimensionsFromData(page.bytes);
+      sizes.set(path, dims);
+      return dims;
+    }
+
+    const file = site.files.find((f) => f.data.url === path);
+    if (file) {
+      using fs = await Deno.open(file.src.entry.src, { read: true, write: false });
+      const dims = await imageDimensionsFromStream(fs.readable);
+      sizes.set(path, dims);
+      return dims;
+    }
+  }
+
+  for (const page of pages) {
+    const { document } = page;
+    const basePath = posix.dirname(page.outputPath);
+
+    for (const a of document.querySelectorAll("a[pswp-size]")) {
+      const href = a.getAttribute("href");
+      if (!href) continue;
+
+      const size = await getImageSize(posix.resolve(basePath, href));
+      if (size) {
+        a.setAttribute("data-pswp-width", size.width.toString());
+        a.setAttribute("data-pswp-height", size.height.toString());
+      }
+
+      a.removeAttribute("pswp-size");
+    }
+  }
+});
 
 export default site;

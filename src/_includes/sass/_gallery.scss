@@ -31,6 +31,10 @@
         $gallery-hover-transition-easing;
     }
 
+    .gallery-item .pswp-caption-content {
+      display: none;
+    }
+
     &[data-image-fit="cover"] {
       .gallery-item {
         flex: 1 0 auto;

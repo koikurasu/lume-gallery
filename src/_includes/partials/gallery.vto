@@ -1,5 +1,5 @@
 <div
-  class="gallery pswp-gallery"
+  class="gallery"
   id="gallery"
   data-gallery-style="{{ gallery_style }}"
   data-image-fit="{{ image_fit }}"
@@ -14,10 +14,14 @@
       {{ /for }}
     >
       <a
-        href="/assets/images/gallery/{{ if lightbox_dimension }}{{ name }}-lightbox.avif{{ else }}{{ image.filename }}{{ /if }}"
+        href="/assets/images/gallery/{{ if lightbox_dimension }}{{ name }}-lightbox.jpg{{ else }}{{ image.filename }}{{ /if }}"
         target="_blank"
+        pswp-size
+        {{ if lightbox_dimension }}data-pswp-srcset="/assets/images/gallery/{{ name }}-lightbox.avif, /assets/images/gallery/{{ name }}-lightbox.jpg"{{ /if }}
       >
-        <picture>
+        <picture
+          {{ if image.caption }}data-caption='{{ image.caption |> md(true) }}'{{ /if }}
+        >
           <source
             srcset="/assets/images/gallery/{{ name }}-thumbnail.avif"
             type="image/avif"
@@ -25,8 +29,9 @@
           <img
             src="/assets/images/gallery/{{ name }}-thumbnail.jpg"
             alt="{{ image.alt }}"
+            loading="lazy"
+            decoding="async"
             image-size
-          >
         </picture>
       </a>
     </div>

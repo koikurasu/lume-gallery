@@ -40,7 +40,7 @@ export default function (userOptions?: Options) {
       .use(favicon(options.favicon))
       .use(sheets({
         sheets: "first",
-        extensions: [".ods", ".xls"],
+        extensions: [".ods", ".xlsx", ".csv"],
       }))
       .add("style.scss")
       .add("/assets");
