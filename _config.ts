@@ -90,7 +90,7 @@ site.process([".html"], async function processPswpSize(pages) {
 if (lightbox_dimension && remove_originals === true) {
   site.process([".jpg", ".jpeg", ".png", ".webp", ".avif"], function removeGalleryOriginals(_pages, allPages) {
     const galleryPrefix = "/assets/images/gallery/";
-    const suffixes = ["-thumbnail", "-lightbox"];
+    const suffixes = ["-thumbnail", "-thumbnail@2x", "-lightbox"];
 
     for (let i = allPages.length - 1; i >= 0; i--) {
       const url = allPages[i].data.url as string;

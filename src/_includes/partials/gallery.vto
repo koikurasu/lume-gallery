@@ -27,12 +27,13 @@
         >
           {{ for f of thumbnail_formats.slice(0, -1) }}
             <source
-              srcset="/assets/images/gallery/{{ name }}-thumbnail.{{ f.format }}"
+              srcset="/assets/images/gallery/{{ name }}-thumbnail.{{ f.format }} 1x, /assets/images/gallery/{{ name }}-thumbnail@2x.{{ f.format }} 2x"
               type="image/{{ f.format }}"
             >
           {{ /for }}
           <img
             src="/assets/images/gallery/{{ name }}-thumbnail.{{ thumb_fallback }}"
+            srcset="/assets/images/gallery/{{ name }}-thumbnail@2x.{{ thumb_fallback }} 2x"
             alt="{{ image.alt }}"
             loading="lazy"
             decoding="async"
