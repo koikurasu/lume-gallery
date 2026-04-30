@@ -1,7 +1,9 @@
 import {
   gallery_style,
   lightbox_dimension,
+  lightbox_formats,
   thumbnail_dimension,
+  thumbnail_formats,
 } from "../../../_data.ts";
 
 const thumbnailResize = gallery_style === "fixed-height"
@@ -26,20 +28,14 @@ export const transformImages = [
   {
     resize: thumbnailResize,
     suffix: "-thumbnail",
-    format: [
-      { format: "avif", quality: 80, chromaSubsampling: "4:4:4" },
-      { format: "jpg", quality: 88, mozjpeg: true, chromaSubsampling: "4:4:4" },
-    ],
+    format: thumbnail_formats,
   },
   ...(lightbox_dimension !== null
     ? [
       {
         resize: lightboxResize,
         suffix: "-lightbox",
-        format: [
-          { format: "avif", quality: 80, chromaSubsampling: "4:4:4" },
-          { format: "jpg", quality: 88, mozjpeg: true, chromaSubsampling: "4:4:4" },
-        ],
+        format: lightbox_formats,
       },
     ]
     : []),
