@@ -19,6 +19,7 @@
         href="/assets/images/gallery/{{ if lightbox_dimension }}{{ name }}-lightbox.{{ lb_fallback }}{{ else }}{{ image.filename }}{{ /if }}"
         target="_blank"
         pswp-size
+        {{ if image_fit == "cover" && !gallery_style.includes("masonry") }}data-cropped="true"{{ /if }}
         {{ if lightbox_dimension }}data-pswp-srcset="{{ for i, f of lightbox_formats }}{{ if i > 0 }}, {{ /if }}/assets/images/gallery/{{ name }}-lightbox.{{ f.format }}{{ /for }}"{{ /if }}
       >
         <picture
