@@ -117,7 +117,8 @@
     top: 0;
     background: color-mix(in srgb, var(--page-bg) 98%, transparent);
     z-index: 10;
-    border-bottom: 1px solid color-mix(in srgb, var(--page-text) 5%, transparent);
+    border-bottom: 1px solid
+      color-mix(in srgb, var(--page-text) 5%, transparent);
   }
 
   .filter-result-count {
