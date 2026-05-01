@@ -24,11 +24,6 @@
   letter-spacing: 0.1em;
   color: #fff;
   mix-blend-mode: difference;
-
-  &:focus-visible {
-    outline: 2px solid var(--page-text);
-    outline-offset: 4px;
-  }
 }
 
 .gallery-filter-panel {
