@@ -15,7 +15,6 @@
     will-change: transform, opacity, filter;
   }
 
-
   &[data-gallery-style="fixed-height"] {
     display: flex;
     flex-wrap: wrap;
@@ -24,7 +23,7 @@
 
     .gallery-item {
       height: var(--gallery-thumbnail-dimension);
-      max-width: calc(#{$gallery-width} - (#{$gallery-padding} * 2));
+      max-width: calc(#{$gallery-width} - #{$gallery-padding} * 2);
     }
 
     .gallery-item a {
@@ -40,7 +39,7 @@
     .gallery-item img {
       display: block;
       height: 100%;
-      max-width: calc(#{$gallery-width} - (#{$gallery-padding} * 2));
+      max-width: calc(#{$gallery-width} - #{$gallery-padding} * 2);
     }
 
     .gallery-item .pswp-caption-content {
@@ -78,12 +77,12 @@
     display: grid;
     grid-template-columns:
       repeat(
-        auto-fit,
-        minmax(
-          min(100%, var(--gallery-thumbnail-dimension)),
-          var(--gallery-thumbnail-dimension)
-        )
-      );
+      auto-fit,
+      minmax(
+        min(100%, var(--gallery-thumbnail-dimension)),
+        var(--gallery-thumbnail-dimension)
+      )
+    );
     justify-content: center;
     gap: $gallery-row-gap $gallery-column-gap;
     padding: $gallery-padding;
@@ -174,4 +173,25 @@
   transform: scale($gallery-hover-scale);
   opacity: $gallery-hover-image-opacity;
   filter: $gallery-hover-image-filter;
+}
+
+// -----------------------------------------------------------------------------
+// Filter animations
+// Items fading out (filter hiding them)
+.gallery-item.is-filter-hiding {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 200ms ease, transform 200ms ease;
+  pointer-events: none;
+}
+
+// Items about to fade in (immediately after unhiding, before transition kicks in)
+.gallery-item.is-filter-showing {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+// Items normally visible - smooth transition back from is-filter-showing
+.gallery-item:not(.is-filter-hiding):not(.is-filter-showing) {
+  transition: opacity 250ms ease 40ms, transform 250ms ease 40ms;
 }

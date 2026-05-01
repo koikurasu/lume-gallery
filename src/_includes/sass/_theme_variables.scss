@@ -2,9 +2,9 @@ $page-max-width: 68rem !default;
 
 :root {
   color-scheme: light dark;
-  
+
   --page-bg: light-dark(#ffffff, #111111);
   --page-text: light-dark(#333333, #e4e4e4);
-  --font-family-base: 'Aspekta Variable', system-ui, sans-serif;
+  --font-family-base: "Aspekta Variable", system-ui, sans-serif;
   --page-max-width: #{$page-max-width};
 }

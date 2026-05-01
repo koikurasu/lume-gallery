@@ -4,8 +4,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const style = getComputedStyle(gallery);
   const rowGap = parseInt(style.getPropertyValue("--gallery-row-gap")) || 0;
-  const columnGap = parseInt(style.getPropertyValue("--gallery-column-gap")) || 0;
-  const thumbDim = parseInt(style.getPropertyValue("--gallery-thumbnail-dimension")) || 300;
+  const columnGap = parseInt(style.getPropertyValue("--gallery-column-gap")) ||
+    0;
+  const thumbDim =
+    parseInt(style.getPropertyValue("--gallery-thumbnail-dimension")) || 300;
 
   // Calculate dynamic breakpoints based on the desired thumbnail dimension
   const maxColumns = 12;
@@ -26,6 +28,8 @@ document.addEventListener("DOMContentLoaded", () => {
     columns: maxColumns,
     breakAt: breakAt,
   });
+
+  globalThis.macyInstance = macy;
 
   globalThis.addEventListener("load", () => {
     macy.recalculate(true);
