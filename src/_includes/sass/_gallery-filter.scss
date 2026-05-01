@@ -115,8 +115,9 @@
     padding: 1.25rem 1.5rem 1rem;
     position: sticky;
     top: 0;
-    background: transparent;
-    z-index: 1;
+    background: color-mix(in srgb, var(--page-bg) 98%, transparent);
+    z-index: 10;
+    border-bottom: 1px solid color-mix(in srgb, var(--page-text) 5%, transparent);
   }
 
   .filter-result-count {
@@ -248,36 +249,33 @@
     padding: 0.5rem;
     z-index: 1000;
     border: none;
-    background: transparent;
-    overflow: visible;
-
     list-style: none;
     background: color-mix(in srgb, var(--page-text) 2%, var(--page-bg));
     border-radius: 6px;
     box-shadow: light-dark(
-      0 10px 30px rgba(0, 0, 0, 0.2),
-      0 10px 30px rgba(0, 0, 0, 0.5)
+      0 10px 20px rgba(0, 0, 0, 0.15),
+      0 10px 20px rgba(0, 0, 0, 0.45)
     );
 
-    width: min(300px, 80vw);
     max-height: 250px;
     overflow-y: auto;
 
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    // Fallback for non-anchor browsers (iOS Safari, Firefox)
+    // Position is set via JS using visualViewport offsets
+    z-index: 9999;
 
-    &:not(:popover-open) {
-      display: none;
+    display: none;
+    &.is-open,
+    &:popover-open {
+      display: block;
     }
 
     @supports (anchor-name: --foo) {
+      position: fixed;
       top: anchor(bottom);
       left: anchor(left);
       width: anchor-size(width);
       margin-top: 0.5rem;
-      transform: none;
 
       position-try-fallbacks: --drop-up;
       position-try-options: --drop-up;

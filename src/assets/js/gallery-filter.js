@@ -217,11 +217,69 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
+  function positionDropdown(area, dropdown) {
+    const rect = area.getBoundingClientRect();
+    const vv = globalThis.visualViewport;
+    const vh = vv ? vv.height : globalThis.innerHeight;
+    const offsetTop = vv ? vv.offsetTop : 0;
+    const offsetLeft = vv ? vv.offsetLeft : 0;
+
+    const naturalHeight = dropdown.scrollHeight || 250;
+    const spaceBelow = vh - rect.bottom;
+    const spaceAbove = rect.top;
+
+    dropdown.style.position = 'fixed';
+    dropdown.style.left = (rect.left + offsetLeft) + 'px';
+    dropdown.style.width = rect.width + 'px';
+    dropdown.style.transform = 'none';
+    dropdown.style.margin = '0';
+    dropdown.style.zIndex = '9999';
+
+    // Bias towards dropping down, only drop up if significantly more space above
+    let isDropUp = false;
+    if (spaceBelow < naturalHeight + 16 && spaceAbove > spaceBelow + 40) {
+      isDropUp = true;
+    }
+
+    if (isDropUp) {
+      const maxH = Math.min(naturalHeight, Math.max(0, spaceAbove - 16));
+      dropdown.style.maxHeight = maxH + 'px';
+      dropdown.style.top = (rect.top + offsetTop - maxH - 8) + 'px';
+      dropdown.style.bottom = 'auto';
+    } else {
+      const maxH = Math.min(naturalHeight, Math.max(0, spaceBelow - 16));
+      dropdown.style.maxHeight = maxH + 'px';
+      dropdown.style.top = (rect.bottom + offsetTop + 8) + 'px';
+      dropdown.style.bottom = 'auto';
+    }
+  }
+
+  function updateDropdownPositions() {
+    if (isAnchorSupported) return;
+    const openArea = panel.querySelector('.filter-field-input-area.is-open');
+    if (openArea) {
+      const cat = openArea.dataset.fieldArea;
+      const dropdown = panel.querySelector(`[data-field-dropdown="${cat}"]`);
+      if (dropdown && dropdown.classList.contains('is-open')) {
+        positionDropdown(openArea, dropdown);
+      }
+    }
+  }
+
   function openDropdown(cat) {
-    panel.querySelector(`[data-field-area="${cat}"]`)?.classList.add("is-open");
+    const area = panel.querySelector(`[data-field-area="${cat}"]`);
+    if (area) area.classList.add("is-open");
     const dropdown = panel.querySelector(`[data-field-dropdown="${cat}"]`);
-    if (dropdown && !dropdown.matches(":popover-open")) {
-      dropdown.showPopover();
+    
+    if (dropdown && !dropdown.classList.contains("is-open")) {
+      if (dropdown.showPopover) {
+        dropdown.showPopover();
+      }
+      
+      if (!isAnchorSupported) {
+        positionDropdown(area, dropdown);
+      }
+      
       dropdown.classList.add("is-open");
     }
   }
@@ -231,8 +289,14 @@ document.addEventListener("DOMContentLoaded", () => {
       "is-open",
     );
     const dropdown = panel.querySelector(`[data-field-dropdown="${cat}"]`);
-    if (dropdown && dropdown.matches(":popover-open")) {
-      dropdown.hidePopover();
+    if (dropdown && dropdown.classList.contains("is-open")) {
+      if (dropdown.hidePopover) {
+        dropdown.hidePopover();
+      }
+      if (!isAnchorSupported) {
+        // Clear manually-set positioning styles
+        dropdown.style.cssText = '';
+      }
       dropdown.classList.remove("is-open");
     }
   }
@@ -249,6 +313,7 @@ document.addEventListener("DOMContentLoaded", () => {
           !toLabel(li.dataset.value).toLowerCase().includes(q);
       },
     );
+    updateDropdownPositions();
   }
 
   // -------------------------------------------------------------------------
@@ -332,6 +397,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Build UI
   // -------------------------------------------------------------------------
 
+  const isAnchorSupported = CSS.supports("anchor-name: --foo");
+
   function buildUI() {
     panel.innerHTML = "";
 
@@ -386,7 +453,7 @@ document.addEventListener("DOMContentLoaded", () => {
             class="filter-dropdown" 
             data-field-dropdown="${cat}" 
             popover="manual"
-            style="position-anchor: --anchor-${cat}"
+            ${isAnchorSupported ? `style="position-anchor: --anchor-${cat}"` : ''}
           >
             ${
         sortedValues
@@ -413,6 +480,13 @@ document.addEventListener("DOMContentLoaded", () => {
   // -------------------------------------------------------------------------
 
   function attachListeners() {
+    // --- Position updates for fallback ---
+    if (!isAnchorSupported) {
+      panel.addEventListener("scroll", updateDropdownPositions);
+      globalThis.visualViewport?.addEventListener("resize", updateDropdownPositions);
+      globalThis.visualViewport?.addEventListener("scroll", updateDropdownPositions);
+    }
+
     // --- Panel click delegation ---
     panel.addEventListener("click", (e) => {
       // Global AND / OR
