@@ -1,0 +1,39 @@
+body {
+  background-color: var(--page-bg);
+  color: var(--page-text);
+  font-family: var(--font-family-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  font-size: 1rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--page-bg);
+  mix-blend-mode: difference;
+  
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .site-nav {
+    display: flex;
+    gap: 1rem;
+  }
+}
+
+main {
+  padding: 0 2rem 2rem;
+  max-width: var(--page-max-width);
+  margin-inline: auto;
+}

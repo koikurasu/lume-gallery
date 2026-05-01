@@ -3,10 +3,13 @@
 // -----------------------------------------------------------------------------
 
 // width of the gallery
-$gallery-width: 100vw !default;
+$gallery-width: 90vw !default;
 
-// gap between images (applies both horizontally and vertically)
-$gallery-gap: 60px !default;
+// vertical gap between rows of images
+$gallery-row-gap: 60px !default;
+
+// horizontal gap between columns of images
+$gallery-column-gap: 60px !default;
 
 // padding around the entire gallery container
 $gallery-padding: 50px !default;
@@ -21,8 +24,16 @@ $gallery-justify-content: space-evenly !default;
 // -----------------------------------------------------------------------------
 
 // scale factor applied to an image on hover (set to 1 to disable).
-$gallery-hover-scale: 1.04 !default;
+$gallery-hover-scale: 1 !default;
 
-// duration + easing of the hover scale transition.
+// opacity applied to images.
+$gallery-image-opacity: 1 !default;
+$gallery-hover-image-opacity: 0.9 !default;
+
+// filters applied to images (e.g., grayscale(20%), brightness(110%), contrast(110%), etc.)
+$gallery-image-filter: none !default;
+$gallery-hover-image-filter: contrast(110%) !default;
+
+// duration + easing of the hover transition.
 $gallery-hover-transition-duration: 200ms !default;
 $gallery-hover-transition-easing: ease !default;
