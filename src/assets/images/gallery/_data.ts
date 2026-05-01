@@ -1,4 +1,5 @@
 import {
+  gallery_aspect_ratio,
   gallery_style,
   image_fit,
   lightbox_dimension,
@@ -6,6 +7,16 @@ import {
   thumbnail_dimension,
   thumbnail_formats,
 } from "../../../_data.ts";
+
+const ratio = (() => {
+  const parts = gallery_aspect_ratio.split("/");
+  if (parts.length === 2) {
+    return parseFloat(parts[0]) / parseFloat(parts[1]);
+  }
+  return parseFloat(parts[0]) || 1;
+})();
+
+const thumbnailHeight = thumbnail_dimension / ratio;
 
 const thumbnailResize1x = gallery_style === "fixed-height"
   ? image_fit === "cover"
@@ -18,7 +29,7 @@ const thumbnailResize1x = gallery_style === "fixed-height"
   : gallery_style === "grid"
   ? [
     thumbnail_dimension,
-    thumbnail_dimension,
+    thumbnailHeight,
     {
       fit: image_fit === "cover" ? "outside" : "inside",
       withoutEnlargement: true,
@@ -37,7 +48,7 @@ const thumbnailResize2x = gallery_style === "fixed-height"
   : gallery_style === "grid"
   ? [
     thumbnail_dimension * 2,
-    thumbnail_dimension * 2,
+    thumbnailHeight * 2,
     {
       fit: image_fit === "cover" ? "outside" : "inside",
       withoutEnlargement: true,

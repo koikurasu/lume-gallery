@@ -4,16 +4,20 @@ export const gallery_style:
   | "fixed-height"
   | "grid"
   | "masonry-css"
-  | "masonry-js" = "masonry-js";
+  | "masonry-js" = "grid";
 
 // controls how images are resized to fit the allocated space. has no effect when using masonry layouts.
 // possible values: cover, contain
 export const image_fit: "cover" | "contain" = "contain";
 
-// max width/height of thumbnails.
-export const thumbnail_dimension = 500;
+// aspect ratio of images when gallery_style = grid.
+// possible values: any valid CSS aspect-ratio value (e.g. 1/1, 4/3, 16/9, 0.75)
+export const gallery_aspect_ratio = "4/3";
 
-// max width/height of lightbox images. will be resized to fit inside this dimension (with aspect ratio preserved)
+// max height (if fixed-height) or width (if grid or masonry) of thumbnails.
+export const thumbnail_dimension = 300;
+
+// max width/height of lightbox images. larger images will be sized down to fit inside this dimension (with aspect ratio preserved)
 // set to null to always serve the original image files.
 // note that this will increase build times, especially the first build, after modifying lightbox_formats,
 // or using a large value for lightbox_dimension. using avif as a format in lightbox_formats greatly increases build times.

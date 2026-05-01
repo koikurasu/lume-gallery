@@ -342,8 +342,8 @@ document.addEventListener("DOMContentLoaded", () => {
       <span class="filter-result-count">${items.length} / ${items.length}</span>
       <div class="filter-global-logic">
         <span class="filter-logic-label">Across categories:</span>
-        <button class="filter-btn is-active" data-global-logic="and">AND</button>
-        <button class="filter-btn" data-global-logic="or">OR</button>
+        <button class="filter-btn is-active" data-global-logic="and">ALL</button>
+        <button class="filter-btn" data-global-logic="or">ANY</button>
         <button class="filter-btn filter-btn-reset" data-global-reset>Reset</button>
       </div>
     `;
@@ -363,8 +363,8 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="filter-category-header">
           <span class="filter-category-label">${toLabel(cat)}</span>
           <div class="filter-category-controls">
-            <button class="filter-btn" data-cat="${cat}" data-cat-logic="and">AND</button>
-            <button class="filter-btn is-active" data-cat="${cat}" data-cat-logic="or">OR</button>
+            <button class="filter-btn" data-cat="${cat}" data-cat-logic="and">ALL</button>
+            <button class="filter-btn is-active" data-cat="${cat}" data-cat-logic="or">ANY</button>
             <button class="filter-btn filter-btn-reset" data-cat="${cat}" data-cat-reset>Reset</button>
           </div>
         </div>
