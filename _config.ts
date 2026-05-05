@@ -63,11 +63,20 @@ site.filter("extractMeta", (row: Record<string, unknown>) => {
   return meta;
 });
 
-// create a simple filter that removes the final .{image extension}
+// filter that removes the final .{image extension}
 site.filter(
   "removeExt",
   (filename: string) => filename.replace(/\.[^/.]+$/, ""),
 );
+
+// filter to convert dates to years
+site.filter("year", (value: string | number | Date): number | string => {
+  if (!value) return "";
+  if (value instanceof Date) return value.getUTCFullYear();
+
+  const match = String(value).trim().match(/\d{3,4}/);
+  return match ? parseInt(match[0], 10) : "";
+});
 
 site.use(plugins());
 

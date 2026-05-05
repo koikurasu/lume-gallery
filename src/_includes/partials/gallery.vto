@@ -9,6 +9,7 @@
     {{ set name = image.filename |> removeExt }}
     <div
       class="gallery-item"
+      {{ if image.date }}data-year="{{ image.date |> year }}"{{ /if }}
       {{ for [key, values] of Object.entries(meta) }}
         data-{{ key }}="{{ values.join(" ") }}"
       {{ /for }}

@@ -42,11 +42,21 @@ document.addEventListener("DOMContentLoaded", () => {
   // -------------------------------------------------------------------------
 
   const categoryMap = new Map();
+  let minYear = Infinity;
+  let maxYear = -Infinity;
 
   for (const item of items) {
+    if (item.dataset.year) {
+      const y = parseInt(item.dataset.year, 10);
+      if (!isNaN(y)) {
+        if (y < minYear) minYear = y;
+        if (y > maxYear) maxYear = y;
+      }
+    }
+
     for (const [key, val] of Object.entries(item.dataset)) {
-      // Skip internal Macy.js attribute and empty values
-      if (key === "macyComplete" || !val) continue;
+      // Skip internal Macy.js attribute, year, and empty values
+      if (key === "macyComplete" || key === "year" || !val) continue;
 
       if (!categoryMap.has(key)) categoryMap.set(key, new Map());
       const counts = categoryMap.get(key);
@@ -57,7 +67,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  if (categoryMap.size === 0) return;
+  const hasYears = minYear !== Infinity && maxYear !== -Infinity;
+
+  if (categoryMap.size === 0 && !hasYears) return;
 
   // -------------------------------------------------------------------------
   // State
@@ -65,6 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const state = {
     globalLogic: "and",
+    yearRange: hasYears ? { min: minYear, max: maxYear } : null,
     categories: Object.fromEntries(
       [...categoryMap.keys()].map((
         k,
@@ -85,11 +98,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const toHide = [];
 
     for (const item of items) {
-      let shouldShow;
+      let shouldShow = true;
 
-      if (activeCategories.length === 0) {
-        shouldShow = true;
-      } else {
+      if (hasYears) {
+        const itemYear = parseInt(item.dataset.year, 10);
+        const isFullRange = state.yearRange.min === minYear &&
+          state.yearRange.max === maxYear;
+        const yearPasses = isFullRange
+          ? true
+          : (!isNaN(itemYear) && itemYear >= state.yearRange.min &&
+            itemYear <= state.yearRange.max);
+        shouldShow = yearPasses;
+      }
+
+      if (shouldShow && activeCategories.length > 0) {
         const results = activeCategories.map(([cat, { logic, selected }]) => {
           const raw = item.dataset[cat] ?? "";
           const vals = new Set(raw.trim().split(/\s+/).filter(Boolean));
@@ -98,9 +120,11 @@ document.addEventListener("DOMContentLoaded", () => {
             : [...selected].some((v) => vals.has(v));
         });
 
-        shouldShow = state.globalLogic === "and"
+        const catShouldShow = state.globalLogic === "and"
           ? results.every(Boolean)
           : results.some(Boolean);
+
+        shouldShow = catShouldShow;
       }
 
       if (shouldShow && item.hidden) toShow.push(item);
@@ -122,7 +146,10 @@ document.addEventListener("DOMContentLoaded", () => {
       stayers.map((item) => [item, item.getBoundingClientRect()]),
     );
 
-    const shouldShowEmpty = visibleCount === 0 && activeCategories.length > 0;
+    const isYearModified = hasYears &&
+      (state.yearRange.min !== minYear || state.yearRange.max !== maxYear);
+    const shouldShowEmpty = visibleCount === 0 &&
+      (activeCategories.length > 0 || isYearModified);
 
     // Step 1: fade out items being hidden
     toHide.forEach((item) => item.classList.add("is-filter-hiding"));
@@ -389,6 +416,10 @@ document.addEventListener("DOMContentLoaded", () => {
       state.categories[cat].selected.clear();
       state.categories[cat].logic = "or";
     }
+    if (hasYears) {
+      state.yearRange.min = minYear;
+      state.yearRange.max = maxYear;
+    }
     buildUI();
     runFilter();
   }
@@ -415,6 +446,31 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     `;
     panel.appendChild(header);
+
+    // --- Year Filter ---
+    if (hasYears) {
+      const yearSection = document.createElement("div");
+      yearSection.className = "filter-category filter-year-section";
+      yearSection.innerHTML = `
+        <div class="filter-category-header">
+          <span class="filter-category-label">Year</span>
+          <div class="filter-category-controls">
+            <button class="filter-btn filter-btn-reset" data-year-reset>Reset</button>
+          </div>
+        </div>
+        <div class="filter-year-slider">
+          <div class="range-slider-track"></div>
+          <div class="range-slider-fill" id="year-slider-fill"></div>
+          <input type="range" id="year-min-range" class="year-range" min="${minYear}" max="${maxYear}" value="${state.yearRange.min}" step="1">
+          <input type="range" id="year-max-range" class="year-range" min="${minYear}" max="${maxYear}" value="${state.yearRange.max}" step="1">
+        </div>
+        <div class="filter-year-inputs">
+          <input type="number" id="year-min-input" class="year-input" min="${minYear}" max="${maxYear}" value="${state.yearRange.min}">
+          <input type="number" id="year-max-input" class="year-input" min="${minYear}" max="${maxYear}" value="${state.yearRange.max}">
+        </div>
+      `;
+      panel.appendChild(yearSection);
+    }
 
     // --- Categories ---
     const categoriesEl = document.createElement("div");
@@ -475,6 +531,78 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     panel.appendChild(categoriesEl);
+    if (hasYears) updateYearSliderFill();
+  }
+
+  function updateYearSliderFill() {
+    const minRange = document.getElementById("year-min-range");
+    const maxRange = document.getElementById("year-max-range");
+    const fill = document.getElementById("year-slider-fill");
+    if (!minRange || !maxRange || !fill) return;
+
+    const min = parseInt(minRange.min, 10);
+    const max = parseInt(maxRange.max, 10);
+    const range = max - min || 1;
+
+    let currMin = parseInt(minRange.value, 10);
+    let currMax = parseInt(maxRange.value, 10);
+
+    if (currMin > currMax) {
+      if (document.activeElement === minRange) {
+        minRange.value = currMax;
+        currMin = currMax;
+      } else {
+        maxRange.value = currMin;
+        currMax = currMin;
+      }
+    }
+
+    state.yearRange.min = currMin;
+    state.yearRange.max = currMax;
+
+    const minInput = document.getElementById("year-min-input");
+    const maxInput = document.getElementById("year-max-input");
+    if (minInput && document.activeElement !== minInput) {
+      minInput.value = currMin;
+    }
+    if (maxInput && document.activeElement !== maxInput) {
+      maxInput.value = currMax;
+    }
+
+    const percentMin = ((currMin - min) / range) * 100;
+    const percentMax = ((currMax - min) / range) * 100;
+
+    fill.style.left = `${percentMin}%`;
+    fill.style.width = `${percentMax - percentMin}%`;
+  }
+
+  function handleYearInputChange() {
+    const minInput = document.getElementById("year-min-input");
+    const maxInput = document.getElementById("year-max-input");
+    const minRange = document.getElementById("year-min-range");
+    const maxRange = document.getElementById("year-max-range");
+
+    let currMin = parseInt(minInput.value, 10) || minYear;
+    let currMax = parseInt(maxInput.value, 10) || maxYear;
+
+    currMin = Math.max(minYear, Math.min(currMin, maxYear));
+    currMax = Math.max(minYear, Math.min(currMax, maxYear));
+
+    if (currMin > currMax) {
+      if (document.activeElement === minInput) {
+        currMin = currMax;
+        minInput.value = currMin;
+      } else {
+        currMax = currMin;
+        maxInput.value = currMax;
+      }
+    }
+
+    minRange.value = currMin;
+    maxRange.value = currMax;
+
+    updateYearSliderFill();
+    runFilter();
   }
 
   // -------------------------------------------------------------------------
@@ -531,6 +659,20 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+      // Reset Year
+      const resetYearBtn = e.target.closest("[data-year-reset]");
+      if (resetYearBtn && hasYears) {
+        state.yearRange.min = minYear;
+        state.yearRange.max = maxYear;
+        const minRange = document.getElementById("year-min-range");
+        const maxRange = document.getElementById("year-max-range");
+        if (minRange) minRange.value = minYear;
+        if (maxRange) maxRange.value = maxYear;
+        updateYearSliderFill();
+        runFilter();
+        return;
+      }
+
       // Remove tag ×
       const tagRemove = e.target.closest("[data-tag-cat]");
       if (tagRemove) {
@@ -580,6 +722,23 @@ document.addEventListener("DOMContentLoaded", () => {
       closeAllDropdowns();
       openDropdown(cat);
     });
+
+    // --- Year Filter interactions ---
+    if (hasYears) {
+      panel.addEventListener("input", (e) => {
+        if (e.target.classList.contains("year-range")) {
+          updateYearSliderFill();
+        }
+      });
+
+      panel.addEventListener("change", (e) => {
+        if (e.target.classList.contains("year-range")) {
+          runFilter();
+        } else if (e.target.classList.contains("year-input")) {
+          handleYearInputChange();
+        }
+      });
+    }
 
     // --- Close dropdowns when clicking outside ---
     document.addEventListener("click", (e) => {
