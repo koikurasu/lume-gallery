@@ -3,6 +3,12 @@
 .gallery {
   width: $gallery-width;
   margin-inline: calc(50% - $gallery-width / 2);
+
+  @media (max-width: $gallery-mobile-breakpoint) {
+    width: $gallery-width-mobile;
+    margin-inline: calc(50% - $gallery-width-mobile / 2);
+  }
+
   --gallery-row-gap: #{$gallery-row-gap};
   --gallery-column-gap: #{$gallery-column-gap};
 
@@ -20,10 +26,19 @@
     flex-wrap: wrap;
     gap: $gallery-row-gap $gallery-column-gap;
     padding: $gallery-padding;
+    @media (max-width: $gallery-mobile-breakpoint) {
+      padding: $gallery-padding-mobile;
+    }
 
     .gallery-item {
       height: var(--gallery-thumbnail-dimension);
       max-width: calc(#{$gallery-width} - #{$gallery-padding} * 2);
+
+      @media (max-width: $gallery-mobile-breakpoint) {
+        max-width: calc(
+          #{$gallery-width-mobile} - #{$gallery-padding-mobile} * 2
+        );
+      }
     }
 
     .gallery-item a {
@@ -40,6 +55,12 @@
       display: block;
       height: 100%;
       max-width: calc(#{$gallery-width} - #{$gallery-padding} * 2);
+
+      @media (max-width: $gallery-mobile-breakpoint) {
+        max-width: calc(
+          #{$gallery-width-mobile} - #{$gallery-padding-mobile} * 2
+        );
+      }
     }
 
     .gallery-item .pswp-caption-content {
@@ -87,6 +108,10 @@
     gap: $gallery-row-gap $gallery-column-gap;
     padding: $gallery-padding;
 
+    @media (max-width: $gallery-mobile-breakpoint) {
+      padding: $gallery-padding-mobile;
+    }
+
     .gallery-item {
       aspect-ratio: var(--gallery-aspect-ratio, 1);
     }
@@ -133,8 +158,17 @@
     column-gap: $gallery-column-gap;
     padding: $gallery-padding;
 
+    @media (max-width: $gallery-mobile-breakpoint) {
+      padding: $gallery-padding-mobile;
+    }
+
     width: $gallery-width;
     margin-inline: calc(50% - $gallery-width / 2);
+
+    @media (max-width: $gallery-mobile-breakpoint) {
+      width: $gallery-width-mobile;
+      margin-inline: calc(50% - $gallery-width-mobile / 2);
+    }
 
     .gallery-item {
       break-inside: avoid;
@@ -161,6 +195,10 @@
        since borders restrict the absolute positioning area. */
     padding: 0;
     border: $gallery-padding solid transparent;
+
+    @media (max-width: $gallery-mobile-breakpoint) {
+      border-width: $gallery-padding-mobile;
+    }
   }
 }
 

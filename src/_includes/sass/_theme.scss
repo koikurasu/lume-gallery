@@ -1,5 +1,10 @@
+html {
+  background-color: var(--page-bg);
+}
+
 body {
   background-color: var(--page-bg);
+  min-height: 100dvh;
   color: var(--page-text);
   font-family: var(--font-family-base);
   -webkit-font-smoothing: antialiased;

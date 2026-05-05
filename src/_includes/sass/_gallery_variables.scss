@@ -5,6 +5,12 @@
 // width of the gallery
 $gallery-width: 90vw !default;
 
+// width of the gallery on mobile
+$gallery-width-mobile: 100vw !default;
+
+// breakpoint for mobile styles
+$gallery-mobile-breakpoint: 768px !default;
+
 // vertical gap between rows of images
 $gallery-row-gap: 60px !default;
 
@@ -13,6 +19,9 @@ $gallery-column-gap: 60px !default;
 
 // padding around the entire gallery container
 $gallery-padding: 50px !default;
+
+// padding around the entire gallery container on mobile
+$gallery-padding-mobile: $gallery-padding !default;
 
 // how much space should be between the images when image_fit is "contain" and gallery_style is "fixed-height"
 // accepts any value that justify-content accepts
