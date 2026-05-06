@@ -4,10 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!gallery || !panel) return;
 
-  const trigger = document.getElementById("gallery-filter-trigger");
-  if (trigger) trigger.hidden = false;
-  panel.hidden = false;
-
   const items = [...gallery.querySelectorAll(".gallery-item")];
   if (items.length === 0) return;
 
@@ -70,6 +66,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const hasYears = minYear !== Infinity && maxYear !== -Infinity;
 
   if (categoryMap.size === 0 && !hasYears) return;
+
+  const trigger = document.getElementById("gallery-filter-trigger");
+  if (trigger) trigger.hidden = false;
+  panel.hidden = false;
 
   // -------------------------------------------------------------------------
   // State
@@ -447,6 +447,10 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
     panel.appendChild(header);
 
+    // --- Content Wrapper ---
+    const content = document.createElement("div");
+    content.className = "filter-panel-content";
+
     // --- Year Filter ---
     if (hasYears) {
       const yearSection = document.createElement("div");
@@ -469,7 +473,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <input type="number" id="year-max-input" class="year-input" min="${minYear}" max="${maxYear}" value="${state.yearRange.max}">
         </div>
       `;
-      panel.appendChild(yearSection);
+      content.appendChild(yearSection);
     }
 
     // --- Categories ---
@@ -530,7 +534,10 @@ document.addEventListener("DOMContentLoaded", () => {
       categoriesEl.appendChild(section);
     }
 
-    panel.appendChild(categoriesEl);
+    if (categoriesEl.children.length > 0) {
+      content.appendChild(categoriesEl);
+    }
+    panel.appendChild(content);
     if (hasYears) updateYearSliderFill();
   }
 
