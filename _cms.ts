@@ -172,6 +172,44 @@ cms.document({
   ],
 });
 
+cms.document({
+  name: "not_found",
+  label: "Not found page",
+  description: "Page shown when a requested page is not found.",
+  store: "src:404.md",
+  fields: [
+    "layout: hidden",
+    "url: hidden",
+    "title: text",
+    {
+      name: "content",
+      type: "markdown",
+      upload: "other_images",
+      relativePath: true,
+    },
+  ],
+});
+
+cms.document({
+  name: "css_variables_gallery",
+  label: "Gallery CSS variables",
+  description: "CSS variables for the image gallery",
+  store: "src:_includes/sass/_gallery_variables.scss",
+  fields: [
+    "content: code",
+  ],
+});
+
+cms.document({
+  name: "css_variables_theme",
+  label: "Theme CSS variables",
+  description: "CSS variables for the site colors and theme",
+  store: "src:_includes/sass/_theme_variables.scss",
+  fields: [
+    "content: code",
+  ],
+});
+
 cms.upload({
   name: "gallery_images",
   label: "Gallery images",
