@@ -2,6 +2,7 @@
   "gallery_style": "masonry-js",
   "image_fit": "contain",
   "gallery_aspect_ratio": "4/3",
+  "hover_captions": true,
   "thumbnail_dimension": 500,
   "lightbox_dimension": 2000,
   "remove_originals": true,

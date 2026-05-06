@@ -100,6 +100,14 @@ cms.document({
       value: "4/3",
     },
     {
+      name: "hover_captions",
+      label: "Hover captions",
+      description:
+        "Show image captions on hover, in addition to the lightbox. Note that captions will always be shown on hover if the user has javascript disabled.",
+      type: "checkbox",
+      value: false,
+    },
+    {
       name: "thumbnail_dimension",
       label: "Thumbnail dimension",
       description:

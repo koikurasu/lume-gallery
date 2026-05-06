@@ -185,14 +185,43 @@ document.addEventListener("DOMContentLoaded", () => {
       globalThis.macyInstance?.recalculate(true);
 
       // FLIP — compute deltas and apply inverted transforms instantly (no transition)
+      const isFixedHeight = gallery.dataset.galleryStyle === "fixed-height";
+
       stayers.forEach((item) => {
         const first = firstPositions.get(item);
         const last = item.getBoundingClientRect();
         const dx = first.left - last.left;
         const dy = first.top - last.top;
-        if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
-          item.style.transition = "none";
-          item.style.transform = `translate(${dx}px, ${dy}px)`;
+
+        if (isFixedHeight) {
+          // For fixed-height+cover, scale() would warp the already-reflowed
+          // object-fit: cover pixels. Use clip-path to mask the size change
+          // without distorting image content.
+          const clipRight = Math.max(0, last.width - first.width);
+          const clipBottom = Math.max(0, last.height - first.height);
+
+          if (
+            Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5 || clipRight > 1 ||
+            clipBottom > 1
+          ) {
+            item.style.transition = "none";
+            item.style.transform = `translate(${dx}px, ${dy}px)`;
+            item.style.clipPath =
+              `inset(0 ${clipRight}px ${clipBottom}px 0 round 0px)`;
+          }
+        } else {
+          const sx = first.width / (last.width || 1);
+          const sy = first.height / (last.height || 1);
+
+          if (
+            Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5 ||
+            Math.abs(sx - 1) > 0.01 || Math.abs(sy - 1) > 0.01
+          ) {
+            item.style.transition = "none";
+            item.style.transformOrigin = "top left";
+            item.style.transform =
+              `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})`;
+          }
         }
       });
 
@@ -200,9 +229,10 @@ document.addEventListener("DOMContentLoaded", () => {
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           stayers.forEach((item) => {
-            if (item.style.transform) {
+            if (item.style.transform || item.style.clipPath) {
               item.style.transition = "";
               item.style.transform = "";
+              item.style.clipPath = "";
             }
           });
           toShow.forEach((item) => item.classList.remove("is-filter-showing"));
@@ -210,6 +240,10 @@ document.addEventListener("DOMContentLoaded", () => {
           if (shouldShowEmpty) {
             emptyStateEl.classList.add("is-visible");
           }
+
+          setTimeout(() => {
+            stayers.forEach((item) => item.style.transformOrigin = "");
+          }, 300);
         });
       });
     }, DURATION);
