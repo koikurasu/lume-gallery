@@ -1,0 +1,36 @@
+{
+  "gallery_style": "masonry-js",
+  "image_fit": "contain",
+  "gallery_aspect_ratio": "4/3",
+  "thumbnail_dimension": 500,
+  "lightbox_dimension": 2000,
+  "remove_originals": true,
+  "thumbnail_formats": [
+    {
+      "format": "avif",
+      "quality": 68,
+      "chromaSubsampling": "4:4:4",
+      "effort": 6,
+      "mozjpeg": false,
+      "lossless": false
+    },
+    {
+      "format": "jpeg",
+      "quality": 88,
+      "chromaSubsampling": "4:4:4",
+      "effort": 0,
+      "mozjpeg": true,
+      "lossless": false
+    }
+  ],
+  "lightbox_formats": [
+    {
+      "format": "jpeg",
+      "quality": 84,
+      "chromaSubsampling": "4:4:4",
+      "effort": 0,
+      "mozjpeg": true,
+      "lossless": false
+    }
+  ]
+}

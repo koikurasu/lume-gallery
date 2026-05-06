@@ -5,7 +5,8 @@ import {
   imageDimensionsFromStream,
 } from "lume/deps/image_dimmensions.ts";
 import { posix } from "lume/deps/path.ts";
-import { lightbox_dimension, remove_originals } from "./src/_data.ts";
+import siteData from "./src/_data.json" with { type: "json" };
+const { lightbox_dimension, remove_originals } = siteData;
 
 const site = lume({
   src: "./src",
@@ -129,7 +130,7 @@ site.process([".html"], async function processPswpSize(pages) {
 });
 
 // remove original images from the published site
-if (lightbox_dimension && remove_originals === true) {
+if (lightbox_dimension > 0 && remove_originals === true) {
   site.process(
     [".jpg", ".jpeg", ".png", ".webp", ".avif"],
     function removeGalleryOriginals(_pages, allPages) {

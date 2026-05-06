@@ -1,4 +1,6 @@
-import {
+import siteData from "../../../_data.json" with { type: "json" };
+
+const {
   gallery_aspect_ratio,
   gallery_style,
   image_fit,
@@ -6,7 +8,7 @@ import {
   lightbox_formats,
   thumbnail_dimension,
   thumbnail_formats,
-} from "../../../_data.ts";
+} = siteData;
 
 const ratio = (() => {
   const parts = gallery_aspect_ratio.split("/");
@@ -75,7 +77,7 @@ export const transformImages = [
     suffix: "-thumbnail@2x",
     format: thumbnail_formats,
   },
-  ...(lightbox_dimension !== null
+  ...(lightbox_dimension > 0
     ? [
       {
         resize: lightboxResize,

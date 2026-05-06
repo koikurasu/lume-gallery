@@ -17,13 +17,13 @@
       {{ set lb_fallback = lightbox_formats.at(-1).format }}
       {{ set thumb_fallback = thumbnail_formats.at(-1).format }}
       <a
-        href="/assets/images/gallery/{{ if lightbox_dimension }}{{ name }}-lightbox.{{ lb_fallback }}{{ else }}{{ image.filename }}{{ /if }}"
+        href="/assets/images/gallery/{{ if lightbox_dimension > 0 }}{{ name }}-lightbox.{{ lb_fallback }}{{ else }}{{ image.filename }}{{ /if }}"
         target="_blank"
         pswp-size
         {{
           if image_fit == "cover" && !gallery_style.includes("masonry")
         }}data-cropped="true"{{ /if }}
-        {{ if lightbox_dimension }}data-pswp-srcset="{{
+        {{ if lightbox_dimension > 0 }}data-pswp-srcset="{{
             for i, f of lightbox_formats
           }}{{ if i > 0 }},
             {{ /if }}/assets/images/gallery/{{ name }}-lightbox.{{ f.format }}{{
