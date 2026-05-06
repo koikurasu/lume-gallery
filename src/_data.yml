@@ -1,9 +1,9 @@
 lang: en
-
+site: Soño
+description: An image gallery theme for Lume
 metas:
-  site: Soño
-  twitter: ""
-  fediverse: ""
-  icon: /uploads/favicon.svg
+  site: =site
+  description: =description
+  icon: /assets/images/other/favicon.svg
   lang: =lang
   generator: true

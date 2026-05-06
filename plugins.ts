@@ -19,7 +19,7 @@ export interface Options {
 
 export const defaults: Options = {
   favicon: {
-    input: "uploads/favicon.svg",
+    input: "assets/images/other/favicon.svg",
   },
 };
 

@@ -43,16 +43,20 @@ const image_format_fields: any[] = [
 ];
 
 cms.document({
-  name: "Site settings",
+  name: "site_settings",
+  label: "Site settings",
   description: "Default settings for the site",
   store: "src:_data.yml",
   fields: [
     "lang: text",
+    "site: text",
+    "description: textarea",
     {
       name: "metas",
       type: "object",
       fields: [
-        "site: text",
+        "site: hidden",
+        "description: hidden",
         "twitter: text",
         "fediverse: text",
         "icon: file",
@@ -64,7 +68,8 @@ cms.document({
 });
 
 cms.document({
-  name: "Gallery settings",
+  name: "gallery_settings",
+  label: "Gallery settings",
   description: "Default settings for the gallery",
   store: "src:_data.json",
   fields: [
@@ -138,16 +143,50 @@ cms.document({
 });
 
 cms.document({
-  name: "Homepage",
-  description: "Main page of the site",
+  name: "gallery_page",
+  label: "Gallery page",
+  description: "Update gallery page title and",
   store: "src:index.vto",
   fields: [
     "layout: hidden",
     "title: text",
-    "content: code",
+    "description: textarea",
   ],
 });
 
-cms.upload("uploads: Uploaded files", "src:uploads");
+cms.document({
+  name: "about",
+  label: "About page",
+  description: "Biography, contact or commission info, etc",
+  store: "src:about.md",
+  fields: [
+    "layout: hidden",
+    "title: text",
+    "description: textarea",
+    {
+      name: "content",
+      type: "markdown",
+      upload: "other_images",
+      relativePath: true,
+    },
+  ],
+});
+
+cms.upload({
+  name: "gallery_images",
+  label: "Gallery images",
+  description: "Upload images to the gallery",
+  store: "src:assets/images/gallery",
+  delete: false,
+  edit: false,
+  rename: false,
+});
+
+cms.upload({
+  name: "other_images",
+  label: "Other images",
+  description: "Other images",
+  store: "src:assets/images/other",
+});
 
 export default cms;
