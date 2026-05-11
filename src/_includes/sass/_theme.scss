@@ -1,3 +1,5 @@
+@use "gallery_variables" as *;
+
 html {
   background-color: var(--page-bg);
 }
@@ -27,6 +29,23 @@ body {
 
 a {
   color: var(--link-color);
+  text-decoration-thickness: 2px;
+
+  &:hover,
+  &:focus-within,
+  &:focus-visible {
+    text-decoration-thickness: 3px;
+  }
+}
+
+code, pre, kbd {
+  background-color: light-dark(
+    color-mix(in oklch, var(--page-text) 8%, transparent),
+    color-mix(in oklch, var(--page-text) 15%, transparent)
+  );
+  border-radius: 6px;
+  padding: 2px 4px;
+  font-size: 0.9rem;
 }
 
 .site-header {
@@ -59,4 +78,83 @@ main {
   padding: 0 2rem 2rem;
   max-width: var(--page-max-width);
   margin-inline: auto;
+
+  figure {
+    picture, img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  figcaption {
+    margin-top: 0.5rem;
+  }
+
+  .one-row-gallery {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+
+    img {
+      height: var(--row-height, 200px);
+      width: 100%;
+      object-fit: cover;
+      flex: 1 1 0;
+    }
+
+    // wrap on mobile
+    @media screen and (max-width: $gallery-mobile-breakpoint) {
+      flex-wrap: wrap;
+      flex-direction: column;
+    }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    table-layout: auto;
+    display: block;
+    overflow-x: scroll;
+
+    th, td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid
+        color-mix(in oklch, var(--page-text) 10%, transparent);
+      word-break: break-word;
+      overflow-wrap: break-word;
+      min-width: 100px;
+    }
+
+    th {
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 0.8rem;
+      color: color-mix(in oklch, var(--page-text) 60%, transparent);
+      border-bottom: 2px solid var(--page-text);
+    }
+
+    tr:hover td {
+      background-color: color-mix(in oklch, var(--page-text) 3%, transparent);
+    }
+
+    code {
+      background-color: color-mix(in oklch, var(--page-text) 5%, transparent);
+      padding: 0.2em 0.4em;
+      border-radius: 4px;
+      font-size: 0.85em;
+    }
+
+    @media screen and (max-width: $gallery-mobile-breakpoint) {
+      font-size: 0.8rem;
+
+      th, td {
+        padding: 0.5rem 0.75rem;
+      }
+    }
+  }
 }
