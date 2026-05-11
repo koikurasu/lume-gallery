@@ -12,7 +12,8 @@
     {{ include "sass/custom-properties.vto" }}
     </style>
   </head>
-  <body>
+  {{ set pageClass = url === "/" ? "home" : url.replaceAll("/", "") }}
+  <body class="page-{{ pageClass }}">
     {{ include "partials/header.vto" }}
     <main>
       {{ content }}

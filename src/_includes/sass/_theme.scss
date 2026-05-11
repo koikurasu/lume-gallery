@@ -1,4 +1,5 @@
 @use "gallery_variables" as *;
+@use "theme_variables" as *;
 
 html {
   background-color: var(--page-bg);
@@ -63,6 +64,10 @@ code, pre, kbd {
   color: #fff;
   mix-blend-mode: difference;
 
+  @media screen and (max-width: $gallery-mobile-breakpoint) {
+    padding: 1rem;
+  }
+
   a {
     color: inherit;
     text-decoration: none;
@@ -71,6 +76,17 @@ code, pre, kbd {
   .site-nav {
     display: flex;
     gap: 1rem;
+  }
+}
+
+body:not(.page-home) {
+  @media screen and (max-width: ($page-max-width + 13rem)) {
+    .site-header {
+      mix-blend-mode: normal;
+      background-color: color-mix(in oklch, var(--page-bg) 75%, transparent);
+      backdrop-filter: blur(10px) saturate(180%);
+      color: var(--page-text);
+    }
   }
 }
 
