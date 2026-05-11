@@ -8,6 +8,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 0;
 
     &[hidden] {
       display: none !important;
@@ -83,6 +84,7 @@
     flex-wrap: wrap;
     gap: $gallery-row-gap $gallery-column-gap;
     padding: $gallery-padding;
+
     @media (max-width: $gallery-mobile-breakpoint) {
       padding: $gallery-padding-mobile;
     }
@@ -125,7 +127,14 @@
     }
 
     &[data-image-fit="cover"] {
+      &::after {
+        content: "";
+        flex: 999 1 0%;
+        height: 0;
+      }
+
       .gallery-item {
+        width: auto;
         flex: 1 1 auto;
       }
 
