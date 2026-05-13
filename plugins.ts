@@ -1,5 +1,4 @@
 import lightningcss from "lume/plugins/lightningcss.ts";
-import basePath from "lume/plugins/base_path.ts";
 import metas from "lume/plugins/metas.ts";
 import { Options as SitemapOptions, sitemap } from "lume/plugins/sitemap.ts";
 import { favicon, Options as FaviconOptions } from "lume/plugins/favicon.ts";
@@ -31,7 +30,6 @@ export default function (userOptions?: Options) {
     site
       .use(sass())
       .use(lightningcss())
-      .use(basePath())
       .use(picture())
       .use(transformImages())
       .use(imageSize())

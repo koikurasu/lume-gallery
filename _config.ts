@@ -6,6 +6,7 @@ import {
 } from "lume/deps/image_dimmensions.ts";
 import { posix } from "lume/deps/path.ts";
 import siteData from "./src/_data.json" with { type: "json" };
+import basePath from "lume/plugins/base_path.ts";
 const { lightbox_dimension, remove_originals } = siteData;
 
 const site = lume({
@@ -152,5 +153,7 @@ if (lightbox_dimension > 0 && remove_originals === true) {
     },
   );
 }
+
+site.use(basePath());
 
 export default site;
