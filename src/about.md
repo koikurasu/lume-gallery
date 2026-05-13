@@ -110,7 +110,7 @@ git clone https://github.com/koikurasu/sono.git
 cd sono
 
 # Start a local development server
-deno task serve
+lume -s
 ```
 
 Full setup instructions, configuration reference, and deployment guides are in the [README](https://github.com/koikurasu/sono#readme).

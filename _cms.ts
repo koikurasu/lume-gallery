@@ -45,7 +45,7 @@ const image_format_fields: any[] = [
 cms.document({
   name: "site_settings",
   label: "Site settings",
-  description: "Default settings for the site",
+  description: "Configure the site name and description",
   store: "src:_data.yml",
   fields: [
     "lang: text",
@@ -70,7 +70,8 @@ cms.document({
 cms.document({
   name: "gallery_settings",
   label: "Gallery settings",
-  description: "Default settings for the gallery",
+  description:
+    "Configure the gallery layout, thumbnail sizes, and image formats",
   store: "src:_data.json",
   fields: [
     {
@@ -153,7 +154,7 @@ cms.document({
 cms.document({
   name: "gallery_page",
   label: "Gallery page",
-  description: "Update gallery page title and",
+  description: "Update gallery page title and description",
   store: "src:index.vto",
   fields: [
     "layout: hidden",
@@ -175,7 +176,7 @@ cms.document({
       name: "content",
       type: "markdown",
       upload: "other_images",
-      relativePath: true,
+      relativePath: false,
     },
   ],
 });
@@ -193,7 +194,7 @@ cms.document({
       name: "content",
       type: "markdown",
       upload: "other_images",
-      relativePath: true,
+      relativePath: false,
     },
   ],
 });
