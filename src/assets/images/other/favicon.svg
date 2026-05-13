@@ -3,11 +3,18 @@
   xmlns:xlink="http://www.w3.org/1999/xlink"
   aria-hidden="true"
   role="img"
-  style="color: rgb(255, 255, 255); --darkreader-inline-color: var(--darkreader-text-ffffff, #e8e6e3)"
   width="192"
   height="192"
   viewBox="0 0 24 24"
 >
+<style>
+  path {
+    fill: #111111;
+  }
+  @media (prefers-color-scheme: dark) {
+    path { fill: #ffffff; }
+  }
+</style>
   <!-- 
     MIT License
     Copyright (c) 2020 Arturo Wibawa
