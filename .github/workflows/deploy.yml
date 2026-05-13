@@ -1,0 +1,50 @@
+name: Publish on GitHub Pages
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+
+      - name: Fetch demo images
+        run: |
+          curl -L https://github.com/koikurasu/sono/releases/download/demo-assets/images.zip -o /tmp/images.zip
+          unzip /tmp/images.zip -d src/assets/
+
+      - name: Restore Lume cache
+        uses: actions/cache@v4
+        with:
+          path: _cache
+          key: lume-cache-${{ github.run_id }}
+          restore-keys: lume-cache-
+
+      - name: Setup Deno environment
+        uses: denoland/setup-deno@v2
+        with:
+          cache: true
+
+      - name: Build site
+        run: deno task build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "_site"
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
