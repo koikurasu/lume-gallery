@@ -1,21 +1,17 @@
-// -----------------------------------------------------------------------------
-// Layout
-// -----------------------------------------------------------------------------
+// vertical gap between rows of images
+$gallery-row-gap: 70px !default;
+
+// horizontal gap between columns of images. has no effect in css masonry
+$gallery-column-gap: $gallery-row-gap !default;
 
 // width of the gallery
-$gallery-width: 90vw !default;
+$gallery-width: 85vw !default;
 
 // width of the gallery on mobile
 $gallery-width-mobile: 100vw !default;
 
 // breakpoint for mobile styles
 $gallery-mobile-breakpoint: 768px !default;
-
-// vertical gap between rows of images
-$gallery-row-gap: 60px !default;
-
-// horizontal gap between columns of images
-$gallery-column-gap: 60px !default;
 
 // padding around the entire gallery container
 $gallery-padding: 50px !default;
@@ -26,11 +22,7 @@ $gallery-padding-mobile: $gallery-padding !default;
 // how much space should be between the images when image_fit is "contain" and gallery_style is "fixed-height"
 // accepts any value that justify-content accepts
 // ex: flex-start, center, flex-end, space-between, space-around, space-evenly
-$gallery-justify-content: space-evenly !default;
-
-// -----------------------------------------------------------------------------
-// Interaction
-// -----------------------------------------------------------------------------
+$gallery-justify-content: flex-start !default;
 
 // scale factor applied to an image on hover (set to 1 to disable).
 $gallery-hover-scale: 1 !default;
