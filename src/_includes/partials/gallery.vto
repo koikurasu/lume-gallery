@@ -30,8 +30,9 @@
           {{ if lightbox_dimension > 0 }}data-pswp-srcset="{{
               for i, f of lightbox_formats
             }}{{ if i > 0 }},
-              {{ /if }}/assets/images/gallery/{{ name }}-lightbox.{{
-                f.format
+              {{ /if }}{{
+                `/assets/images/gallery/${name}-lightbox.${f.format}`
+                |> url
               }}{{ /for }}"{{ /if }}
         >
           <picture>
