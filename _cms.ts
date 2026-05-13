@@ -75,6 +75,13 @@ cms.document({
   store: "src:_data.json",
   fields: [
     {
+      name: "base_url",
+      label: "Base URL",
+      description:
+        "The complete base URL of your site (e.g. https://username.github.io/repo-name). This is required for proper asset linking, especially when deploying to a subdirectory like GitHub Pages.",
+      type: "text",
+    },
+    {
       name: "gallery_style",
       label: "Gallery style",
       description:
