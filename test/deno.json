@@ -1,9 +1,9 @@
 {
   "imports": {
-    "lume/": "https://cdn.jsdelivr.net/gh/lumeland/lume@3.1.0/",
-    "lume/cms/": "https://cdn.jsdelivr.net/gh/lumeland/cms@0.13.0/",
+    "lume/": "https://cdn.jsdelivr.net/gh/lumeland/lume@3.2.4/",
+    "lume/cms/": "https://cdn.jsdelivr.net/gh/lumeland/cms@0.15.0/",
     "theme/": "../",
-    "lume/jsx-runtime": "https://cdn.jsdelivr.net/gh/oscarotero/ssx@0.1.12/jsx-runtime.ts"
+    "lume/jsx-runtime": "https://cdn.jsdelivr.net/gh/oscarotero/ssx@0.1.14/jsx-runtime.ts"
   },
   "lock": false,
   "tasks": {
@@ -61,7 +61,7 @@
   },
   "lint": {
     "plugins": [
-      "https://cdn.jsdelivr.net/gh/lumeland/lume@3.1.0/lint.ts"
+      "https://cdn.jsdelivr.net/gh/lumeland/lume@3.2.4/lint.ts"
     ],
     "rules": {
       "exclude": [
