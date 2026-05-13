@@ -39,7 +39,7 @@ a {
   }
 }
 
-code, pre, kbd {
+code, kbd {
   background-color: light-dark(
     color-mix(in oklch, var(--page-text) 8%, transparent),
     color-mix(in oklch, var(--page-text) 15%, transparent)
@@ -47,6 +47,27 @@ code, pre, kbd {
   border-radius: 6px;
   padding: 2px 4px;
   font-size: 0.9rem;
+}
+
+pre {
+  display: block;
+  padding: 1.25rem;
+  overflow-x: auto;
+  background-color: light-dark(
+    color-mix(in oklch, var(--page-text) 4%, transparent),
+    color-mix(in oklch, var(--page-text) 8%, transparent)
+  );
+  border-radius: 8px;
+  margin: 1.5rem 0;
+  line-height: 1.6;
+
+  code {
+    background-color: transparent;
+    padding: 0;
+    border-radius: 0;
+    font-size: 0.85rem;
+    color: inherit;
+  }
 }
 
 .site-header {
