@@ -121,6 +121,8 @@ Theme code is released under the [MIT License](https://github.com/koikurasu/sono
 
 - [Aspekta](https://github.com/ivodolenc/aspekta) – SIL Open Font License 1.1
 - [PhotoSwipe](https://photoswipe.com/) – MIT
+- [Dynamic caption plugin for PhotoSwipe v5](https://github.com/dimsemenov/photoswipe-dynamic-caption-plugin) – MIT
 - [Macy.js](https://github.com/bigbite/macy.js) – MIT
+- [Akar Icons](https://github.com/artcoholic/akar-icons) – MIT
 
 The demo images are public domain works sourced from museum open access collections.

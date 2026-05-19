@@ -107,3 +107,4 @@ The theme ships with [Aspekta](https://github.com/ivodolenc/aspekta) (OFL 1.1). 
 - [PhotoSwipe](https://photoswipe.com/) – MIT
 - [Dynamic caption plugin for PhotoSwipe v5](https://github.com/dimsemenov/photoswipe-dynamic-caption-plugin) – MIT
 - [Macy.js](https://github.com/bigbite/macy.js) – MIT
+- [Akar Icons](https://github.com/artcoholic/akar-icons) – MIT

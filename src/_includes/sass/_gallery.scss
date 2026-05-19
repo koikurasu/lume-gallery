@@ -272,9 +272,6 @@
   }
 
   &[data-gallery-style="masonry-js"] {
-    /* Macy.js absolutely positions items relative to the padding box. 
-       Using a transparent border ensures items don't overlap the "padding" 
-       since borders restrict the absolute positioning area. */
     padding: 0;
     border: $gallery-padding solid transparent;
 
@@ -295,9 +292,6 @@
   filter: $gallery-hover-image-filter;
 }
 
-// -----------------------------------------------------------------------------
-// Filter animations
-// Items fading out (filter hiding them)
 .gallery-item.is-filter-hiding {
   opacity: 0;
   transform: scale(0.95);
@@ -305,16 +299,21 @@
   pointer-events: none;
 }
 
-// Items about to fade in (immediately after unhiding, before transition kicks in)
 .gallery-item.is-filter-showing {
   opacity: 0;
   transform: scale(0.95);
 }
 
-// Items normally visible - smooth transition back from is-filter-showing
 .gallery-item:not(.is-filter-hiding):not(.is-filter-showing) {
   transition:
     opacity 250ms ease 40ms,
     transform 250ms ease 40ms,
     clip-path 250ms ease 40ms;
+}
+
+.pswp__icn {
+  fill: none !important;
+  color: var(--pswp-icon-color) !important;
+  padding: 4px;
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.3));
 }
