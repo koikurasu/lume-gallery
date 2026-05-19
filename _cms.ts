@@ -170,14 +170,14 @@ cms.document({
   ],
 });
 
-cms.document({
-  name: "about",
-  label: "About page",
-  description: "Biography, contact or commission info, etc",
-  store: "src:about.md",
+cms.collection({
+  name: "pages",
+  label: "Pages",
+  description: "Extra pages, such as about or contact pages",
+  store: "src:pages/*.md",
   fields: [
-    "layout: hidden",
     "title: text",
+    "url: text",
     "description: textarea",
     {
       name: "content",

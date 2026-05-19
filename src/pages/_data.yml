@@ -1,0 +1,5 @@
+menu: true
+layout: layouts/base.vto
+templateEngine:
+  - vto
+  - md

@@ -3,6 +3,8 @@
     <a href="/">{{ site }}</a>
   </div>
   <nav class="site-nav">
-    <a href="/about/">About</a>
+    {{ for page of search.pages("menu=true") }}
+    <a href="{{ page.url }}">{{ page.title }}</a>
+    {{ /for }}
   </nav>
 </header>
